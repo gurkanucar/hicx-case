@@ -104,4 +104,20 @@ public class FileUtil {
     File file = new File(path);
     return file.length();
   }
+
+  public static String createDefaultFolder() {
+    File resourcesDir = new File("src/main/resources");
+    File newFolder = new File(resourcesDir, "watch_this_directory");
+    if (!newFolder.exists()) {
+      boolean success = newFolder.mkdir();
+      if (success) {
+        System.out.println("Directory created successfully");
+      } else {
+        System.out.println("Failed to create directory");
+      }
+    } else {
+      System.out.println("Directory already exists");
+    }
+    return newFolder.getPath();
+  }
 }

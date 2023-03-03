@@ -3,15 +3,15 @@ package org.gucardev.model;
 public enum FileType {
   TXT("txt");
 
-  String label;
+  String extension;
 
-  FileType(String label) {
-    this.label = label;
+  FileType(String extension) {
+    this.extension = extension;
   }
 
-  public static boolean contains(String test) {
+  public static boolean contains(String label) {
     for (FileType c : FileType.values()) {
-      if (c.name().equals(test)) {
+      if (c.name().equals(label)) {
         return true;
       }
     }

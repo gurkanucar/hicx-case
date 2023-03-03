@@ -5,6 +5,7 @@ import org.gucardev.util.FileUtil;
 import org.gucardev.util.StatisticsUtil;
 import org.gucardev.util.TextFileReader;
 
+/** The type Text file processor. */
 public class TextFileProcessor extends BaseFileProcessor {
 
   @Override
@@ -22,6 +23,11 @@ public class TextFileProcessor extends BaseFileProcessor {
             fileName, fileExtension, this.getSize(), this.getCreated(), this.getStatistic());
   }
 
+  /**
+   * Instantiates a new Text file processor.
+   *
+   * @param path the path
+   */
   public TextFileProcessor(String path) {
     super(path);
     super.statistic = new Statistic();

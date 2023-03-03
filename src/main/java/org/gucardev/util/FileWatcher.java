@@ -17,14 +17,22 @@ import org.gucardev.model.FileType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/** The type File watcher. */
 public class FileWatcher implements Runnable {
 
+  /** The Logger. */
   Logger logger = LoggerFactory.getLogger(FileWatcher.class);
 
   private Map<Path, Long> lastModifiedTimes = new HashMap<>();
   private final WatchService watchService;
   private final Path directory;
 
+  /**
+   * Instantiates a new File watcher.
+   *
+   * @param directory the directory
+   * @throws IOException the io exception
+   */
   public FileWatcher(Path directory) throws IOException {
     this.directory = directory;
     this.watchService = FileSystems.getDefault().newWatchService();

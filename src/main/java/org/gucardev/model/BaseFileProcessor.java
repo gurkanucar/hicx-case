@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import lombok.Data;
 
+/** The type Base file processor. */
 @Data
 public abstract class BaseFileProcessor implements Serializable {
 
@@ -18,11 +19,11 @@ public abstract class BaseFileProcessor implements Serializable {
   protected String extension;
   protected long size;
 
-  public abstract void processFile();
-
   BaseFileProcessor(String path) {
     this.path = path;
   }
+
+  public abstract void processFile();
 
   public abstract void calculateNumberOfWords();
 

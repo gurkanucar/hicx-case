@@ -1,5 +1,6 @@
 package org.gucardev.model;
 
+/** The enum File type. */
 public enum FileType {
   TXT("txt");
 
@@ -9,6 +10,12 @@ public enum FileType {
     this.extension = extension;
   }
 
+  /**
+   * From string file type.
+   *
+   * @param text the text
+   * @return the file type
+   */
   public static FileType fromString(String text) {
     for (FileType fileType : FileType.values()) {
       if (fileType.extension.equalsIgnoreCase(text)) {
@@ -18,6 +25,12 @@ public enum FileType {
     return null;
   }
 
+  /**
+   * Contains boolean.
+   *
+   * @param label the label
+   * @return the boolean
+   */
   public static boolean contains(String label) {
     for (FileType c : FileType.values()) {
       if (c.extension.equals(label)) {

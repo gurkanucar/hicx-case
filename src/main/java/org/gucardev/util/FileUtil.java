@@ -8,10 +8,17 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
+/** The type File util. */
 public class FileUtil {
 
   private FileUtil() {}
 
+  /**
+   * Gets file name.
+   *
+   * @param path the path
+   * @return the file name
+   */
   public static String getFileName(String path) {
     File file = new File(path);
     String fileName = file.getName();
@@ -23,6 +30,12 @@ public class FileUtil {
     }
   }
 
+  /**
+   * Gets file extension.
+   *
+   * @param path the path
+   * @return the file extension
+   */
   public static String getFileExtension(String path) {
     String extension = "";
     int i = path.lastIndexOf('.');
@@ -32,6 +45,12 @@ public class FileUtil {
     return extension;
   }
 
+  /**
+   * Gets file created date.
+   *
+   * @param path the path
+   * @return the file created date
+   */
   public static LocalDateTime getFileCreatedDate(String path) {
     try {
       Path filePath = new File(path).toPath();
@@ -45,6 +64,12 @@ public class FileUtil {
     return LocalDateTime.now();
   }
 
+  /**
+   * Gets file size.
+   *
+   * @param path the path
+   * @return the file size
+   */
   public static long getFileSize(String path) {
     File file = new File(path);
     return file.length();

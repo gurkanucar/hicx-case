@@ -2,6 +2,7 @@ package org.gucardev.model;
 
 import lombok.Data;
 
+/** The type Statistic. */
 @Data
 public class Statistic {
 

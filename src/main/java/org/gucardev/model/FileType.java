@@ -9,9 +9,18 @@ public enum FileType {
     this.extension = extension;
   }
 
+  public static FileType fromString(String text) {
+    for (FileType fileType : FileType.values()) {
+      if (fileType.extension.equalsIgnoreCase(text)) {
+        return fileType;
+      }
+    }
+    return null;
+  }
+
   public static boolean contains(String label) {
     for (FileType c : FileType.values()) {
-      if (c.name().equals(label)) {
+      if (c.extension.equals(label)) {
         return true;
       }
     }

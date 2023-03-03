@@ -3,6 +3,7 @@ package org.gucardev.util;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -12,6 +13,36 @@ import java.time.ZoneId;
 public class FileUtil {
 
   private FileUtil() {}
+
+  /**
+   * Create folder.
+   *
+   * @param path the path
+   */
+  public static void createFolder(String path) {
+    try {
+      File folder = new File(path);
+      folder.mkdirs();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  /**
+   * Move file.
+   *
+   * @param sourceFilePath the source file path
+   * @param destinationFilePath the destination file path
+   */
+  public static void moveFile(String sourceFilePath, String destinationFilePath) {
+    try {
+      Path sourcePath = Paths.get(sourceFilePath);
+      Path destinationPath = Paths.get(destinationFilePath);
+      Files.move(sourcePath, destinationPath);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
 
   /**
    * Gets file name.

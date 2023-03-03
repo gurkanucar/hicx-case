@@ -73,14 +73,14 @@ public class FileWatcher implements Runnable {
 
     if (FileType.contains(extension)) {
 
-      BaseFileProcessor fileProcessor =
-          FileProcessorFactory.create(FileType.fromString(extension), String.valueOf(path));
-
-      fileProcessor.processFile();
-      fileProcessor.moveToProcessedFolder();
-
-      logger.debug(fileProcessor.getStatisticResult());
-      System.out.println(fileProcessor.getStatisticResult());
+      synchronized (this) {
+        BaseFileProcessor fileProcessor =
+            FileProcessorFactory.create(FileType.fromString(extension), String.valueOf(path));
+        fileProcessor.processFile();
+        fileProcessor.moveToProcessedFolder();
+        logger.debug(fileProcessor.getStatisticResult());
+        System.out.println(fileProcessor.getStatisticResult());
+      }
     }
   }
 }

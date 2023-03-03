@@ -1,19 +1,13 @@
 package org.gucardev.model;
 
-public class TextFileProcessor extends BaseFileProcessor{
+public class TextFileProcessor extends BaseFileProcessor {
 
   @Override
-  public void calculateNumberOfWords() {
-
-  }
+  public void calculateNumberOfWords() {}
 
   @Override
-  public void calculateNumberOfDots() {
-
-  }
+  public void calculateNumberOfDots() {}
 
   @Override
-  public void calculateMostUsedWord() {
-
-  }
+  public void calculateMostUsedWord() {}
 }

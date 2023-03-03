@@ -16,7 +16,11 @@ Requirements:
 
 ![./images/uml_diagram.png](./images/uml_diagram.png)
 
-### How to run
+## How to run
+
+### Explanation Video: [https://youtu.be/NXVtpHmZPQs](https://youtu.be/NXVtpHmZPQs)
+
+
 
 #### clone the project: https://github.com/gurkanucar/hicx-case
 

@@ -11,9 +11,17 @@ import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 import java.util.HashMap;
 import java.util.Map;
+import org.gucardev.factory.FileProcessorFactory;
+import org.gucardev.model.BaseFileProcessor;
+import org.gucardev.model.FileType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class FileWatcher implements Runnable {
 
+  Logger logger = LoggerFactory.getLogger(FileWatcher.class);
+
+  private Map<Path, Long> lastModifiedTimes = new HashMap<>();
   private final WatchService watchService;
   private final Path directory;
 
@@ -60,8 +68,6 @@ public class FileWatcher implements Runnable {
     }
   }
 
-  private Map<Path, Long> lastModifiedTimes = new HashMap<>();
-
   private void handleFile(Path path, String eventType) {
     // ignore temp files
     if (path.toString().endsWith("~")) {
@@ -70,15 +76,25 @@ public class FileWatcher implements Runnable {
     Long lastModifiedTime = lastModifiedTimes.get(path);
     long newModifiedTime = path.toFile().lastModified();
 
-    if (eventType.equals("MODIFIED")) {
-      if (lastModifiedTime != null && newModifiedTime == lastModifiedTime) {
-        return;
-      }
-      System.out.println("File MODIFIED: " + path);
-    } else {
-      System.out.println("File " + eventType + ": " + path);
+    if (eventType.equals("MODIFIED")
+        && lastModifiedTime != null
+        && newModifiedTime == lastModifiedTime) {
+      return;
     }
-
+    // logger.info("{} : {} ", eventType, path);
     lastModifiedTimes.put(path, newModifiedTime);
+
+    String extension = FileUtil.getFileExtension(String.valueOf(path));
+
+    if (FileType.contains(extension)) {
+
+      BaseFileProcessor fileProcessor =
+          FileProcessorFactory.create(FileType.fromString(extension), String.valueOf(path));
+
+      fileProcessor.processFile();
+
+      logger.debug(fileProcessor.getStatisticResult());
+      System.out.println(fileProcessor.getStatisticResult());
+    }
   }
 }

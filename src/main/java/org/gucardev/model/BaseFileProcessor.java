@@ -11,10 +11,14 @@ public abstract class BaseFileProcessor implements Serializable {
 
   protected LocalDateTime created;
 
+  protected String statisticResult;
+
   protected String path;
   protected String fileName;
   protected String extension;
   protected long size;
+
+  public abstract void processFile();
 
   BaseFileProcessor(String path) {
     this.path = path;

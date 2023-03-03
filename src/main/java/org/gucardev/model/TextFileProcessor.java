@@ -7,6 +7,21 @@ import org.gucardev.util.TextFileReader;
 
 public class TextFileProcessor extends BaseFileProcessor {
 
+  @Override
+  public void processFile() {
+
+    String fileName = this.getFileName();
+    String fileExtension = this.getExtension();
+    this.calculateMostUsedWord();
+    this.calculateNumberOfDots();
+    this.calculateNumberOfWords();
+
+    super.statisticResult =
+        String.format(
+            "file: %s.%s | size: %d byte | created: %s | %s",
+            fileName, fileExtension, this.getSize(), this.getCreated(), this.getStatistic());
+  }
+
   public TextFileProcessor(String path) {
     super(path);
     super.statistic = new Statistic();

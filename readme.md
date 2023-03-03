@@ -12,6 +12,10 @@ Requirements:
 
 - [x] Move processed files to "processed" sub folder
 
+## UML Diagram
+
+![./images/uml_diagram.png](./images/uml_diagram.png)
+
 ### How to run
 
 #### clone the project: https://github.com/gurkanucar/hicx-case
@@ -47,5 +51,3 @@ src/main/resources/watch_this_directory
 
 jar file is available here: [hicx-case-1.0-SNAPSHOT.jar](https://github.com/gurkanucar/hicx-case/blob/main/build/hicx-case-1.0-SNAPSHOT.jar)
 
-
-![./images/uml_diagram.png](./images/uml_diagram.png)

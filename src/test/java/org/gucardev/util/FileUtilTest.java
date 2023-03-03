@@ -88,4 +88,11 @@ class FileUtilTest {
     long result = FileUtil.getFileSize(TEST_FOLDER_PATH + "/" + fileName);
     assertEquals(12, result);
   }
+
+  @Test
+  public void testCreateDefaultFolder() {
+    String path = FileUtil.createDefaultFolder();
+    assertNotNull(path);
+    assertTrue(path.endsWith("watch_this_directory"));
+  }
 }

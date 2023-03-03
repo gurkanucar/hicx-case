@@ -7,13 +7,18 @@ import lombok.Data;
 @Data
 public abstract class BaseFileProcessor implements Serializable {
 
-  private Statistic statistic = new Statistic();
+  protected Statistic statistic;
 
-  private LocalDateTime created;
+  protected LocalDateTime created;
 
-  private String path;
-  private String fileName;
-  private String extension;
+  protected String path;
+  protected String fileName;
+  protected String extension;
+  protected long size;
+
+  BaseFileProcessor(String path) {
+    this.path = path;
+  }
 
   public abstract void calculateNumberOfWords();
 

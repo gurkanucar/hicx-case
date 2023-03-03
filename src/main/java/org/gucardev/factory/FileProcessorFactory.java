@@ -6,11 +6,13 @@ import org.gucardev.model.TextFileProcessor;
 
 public class FileProcessorFactory {
 
-  public static BaseFileProcessor create(FileType fileType) {
+  private FileProcessorFactory() {}
+
+  public static BaseFileProcessor create(FileType fileType, String path) {
 
     switch (fileType) {
       case TXT:
-        return new TextFileProcessor();
+        return new TextFileProcessor(path);
       default:
         throw new IllegalArgumentException("Unknown type " + fileType);
     }

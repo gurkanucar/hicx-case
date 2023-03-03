@@ -4,10 +4,13 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 public class FileUtil {
+
+  private FileUtil() {}
 
   public static String getFileName(String path) {
     File file = new File(path);
@@ -29,18 +32,17 @@ public class FileUtil {
     return extension;
   }
 
-  public static String getFileCreatedDate(String path) {
-    String formattedDate = "";
+  public static LocalDateTime getFileCreatedDate(String path) {
     try {
       Path filePath = new File(path).toPath();
       BasicFileAttributes attrs = Files.readAttributes(filePath, BasicFileAttributes.class);
-      Date creationDate = new Date(attrs.creationTime().toMillis());
-      SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-      formattedDate = dateFormat.format(creationDate);
+      return LocalDateTime.ofInstant(
+          Instant.ofEpochMilli(attrs.creationTime().toMillis()), ZoneId.systemDefault());
+
     } catch (Exception e) {
       e.printStackTrace();
     }
-    return formattedDate;
+    return LocalDateTime.now();
   }
 
   public static long getFileSize(String path) {

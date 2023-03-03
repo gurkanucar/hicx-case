@@ -12,14 +12,8 @@ import java.nio.file.WatchService;
 import org.gucardev.factory.FileProcessorFactory;
 import org.gucardev.model.BaseFileProcessor;
 import org.gucardev.model.FileType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /** The type File watcher. */
 public class FileWatcher implements Runnable {
-
-  /** The Logger. */
-  Logger logger = LoggerFactory.getLogger(FileWatcher.class);
 
   private final WatchService watchService;
   private final Path directory;
@@ -78,7 +72,6 @@ public class FileWatcher implements Runnable {
             FileProcessorFactory.create(FileType.fromString(extension), String.valueOf(path));
         fileProcessor.processFile();
         fileProcessor.moveToProcessedFolder();
-        logger.debug(fileProcessor.getStatisticResult());
         System.out.println(fileProcessor.getStatisticResult());
       }
     }

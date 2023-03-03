@@ -50,7 +50,7 @@ public class FileWatcher implements Runnable {
           handleFile(filePath, "CREATED");
         }
         key.reset();
-        Thread.sleep(2000);
+        Thread.sleep(5000);
       }
     } catch (InterruptedException e) {
       Thread.currentThread().interrupt();

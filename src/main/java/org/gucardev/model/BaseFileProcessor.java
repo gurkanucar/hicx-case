@@ -30,4 +30,6 @@ public abstract class BaseFileProcessor implements Serializable {
   public abstract void calculateNumberOfDots();
 
   public abstract void calculateMostUsedWord();
+
+  public abstract void moveToProcessedFolder();
 }

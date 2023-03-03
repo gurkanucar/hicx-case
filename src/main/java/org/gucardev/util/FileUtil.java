@@ -3,7 +3,7 @@ package org.gucardev.util;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -34,11 +34,10 @@ public class FileUtil {
    * @param sourceFilePath the source file path
    * @param destinationFilePath the destination file path
    */
-  public static void moveFile(String sourceFilePath, String destinationFilePath) {
+  public static void moveFile(Path sourceFilePath, Path destinationFilePath) {
     try {
-      Path sourcePath = Paths.get(sourceFilePath);
-      Path destinationPath = Paths.get(destinationFilePath);
-      Files.move(sourcePath, destinationPath);
+      createFolder(String.valueOf(destinationFilePath));
+      Files.move(sourceFilePath, destinationFilePath, StandardCopyOption.REPLACE_EXISTING);
     } catch (Exception e) {
       e.printStackTrace();
     }

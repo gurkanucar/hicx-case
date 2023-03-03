@@ -9,8 +9,6 @@ import java.nio.file.StandardWatchEventKinds;
 import java.nio.file.WatchEvent;
 import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
-import java.util.HashMap;
-import java.util.Map;
 import org.gucardev.factory.FileProcessorFactory;
 import org.gucardev.model.BaseFileProcessor;
 import org.gucardev.model.FileType;
@@ -23,7 +21,6 @@ public class FileWatcher implements Runnable {
   /** The Logger. */
   Logger logger = LoggerFactory.getLogger(FileWatcher.class);
 
-  private Map<Path, Long> lastModifiedTimes = new HashMap<>();
   private final WatchService watchService;
   private final Path directory;
 
@@ -36,11 +33,7 @@ public class FileWatcher implements Runnable {
   public FileWatcher(Path directory) throws IOException {
     this.directory = directory;
     this.watchService = FileSystems.getDefault().newWatchService();
-    this.directory.register(
-        watchService, StandardWatchEventKinds.ENTRY_CREATE, StandardWatchEventKinds.ENTRY_MODIFY
-        // uncomment this if you need
-        // StandardWatchEventKinds.ENTRY_DELETE
-        );
+    this.directory.register(watchService, StandardWatchEventKinds.ENTRY_CREATE);
 
     // Iterate through existing files in the directory and process them
     try (DirectoryStream<Path> stream = Files.newDirectoryStream(directory)) {
@@ -58,14 +51,9 @@ public class FileWatcher implements Runnable {
       WatchKey key;
       while ((key = watchService.take()) != null) {
         for (WatchEvent<?> event : key.pollEvents()) {
-          WatchEvent.Kind<?> kind = event.kind();
           Path fileName = (Path) event.context();
           Path filePath = directory.resolve(fileName);
-          if (kind == StandardWatchEventKinds.ENTRY_CREATE) {
-            handleFile(filePath, "CREATED");
-          } else if (kind == StandardWatchEventKinds.ENTRY_MODIFY) {
-            handleFile(filePath, "MODIFIED");
-          }
+          handleFile(filePath, "CREATED");
         }
         key.reset();
         Thread.sleep(2000);
@@ -81,17 +69,6 @@ public class FileWatcher implements Runnable {
     if (path.toString().endsWith("~")) {
       return;
     }
-    Long lastModifiedTime = lastModifiedTimes.get(path);
-    long newModifiedTime = path.toFile().lastModified();
-
-    if (eventType.equals("MODIFIED")
-        && lastModifiedTime != null
-        && newModifiedTime == lastModifiedTime) {
-      return;
-    }
-    // logger.info("{} : {} ", eventType, path);
-    lastModifiedTimes.put(path, newModifiedTime);
-
     String extension = FileUtil.getFileExtension(String.valueOf(path));
 
     if (FileType.contains(extension)) {
@@ -100,6 +77,7 @@ public class FileWatcher implements Runnable {
           FileProcessorFactory.create(FileType.fromString(extension), String.valueOf(path));
 
       fileProcessor.processFile();
+      fileProcessor.moveToProcessedFolder();
 
       logger.debug(fileProcessor.getStatisticResult());
       System.out.println(fileProcessor.getStatisticResult());

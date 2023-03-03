@@ -1,6 +1,7 @@
 package org.gucardev.model;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import org.gucardev.util.FileUtil;
 import org.gucardev.util.StatisticsUtil;
 import org.gucardev.util.TextFileReader;
@@ -10,13 +11,11 @@ public class TextFileProcessor extends BaseFileProcessor {
 
   @Override
   public void processFile() {
-
     String fileName = this.getFileName();
     String fileExtension = this.getExtension();
     this.calculateMostUsedWord();
     this.calculateNumberOfDots();
     this.calculateNumberOfWords();
-
     super.statisticResult =
         String.format(
             "file: %s.%s | size: %d byte | created: %s | %s",
@@ -66,5 +65,12 @@ public class TextFileProcessor extends BaseFileProcessor {
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
+  }
+
+  @Override
+  public void moveToProcessedFolder() {
+    // Move file to processed subfolder
+    Path processedDir = Path.of(super.path).resolveSibling("processed");
+    FileUtil.moveFile(Path.of(super.path), processedDir.resolve(Path.of(super.path).getFileName()));
   }
 }
